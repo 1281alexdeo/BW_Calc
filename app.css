@@ -1,0 +1,103 @@
+* {
+  margin: 0px 0px;
+  font-family: Lato, sans-serif, serif;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+body {
+  margin: 0 0;
+}
+.nav-bar {
+  padding-left: 2.5rem;
+  background-color: #00d1cd !important;
+}
+.heading {
+  text-align: center;
+}
+.fa-trash {
+  cursor: pointer;
+}
+.section-top {
+  background-color: #eaeaea;
+  width: 100%;
+  margin-top: -3rem;
+}
+.top-content {
+  padding: 1rem 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.table-result {
+  padding: 0px 3.3rem;
+}
+
+/* CSS GRID */
+.form_wrapper {
+  display: grid;
+  grid-column-gap: 1em;
+  grid-row-gap: 2px;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+.vc_name {
+  grid-column-start: span 2;
+}
+.vc_avail {
+  grid-column-start: span 2;
+}
+.vc__add {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.vc__add:hover {
+  color: #fff;
+}
+
+.icon-add {
+  widows: 20px;
+  height: 20px;
+}
+
+.btn-outline-info {
+  color: #444444 !important;
+  border-color: #00d1cd;
+}
+.btn-outline-info:hover {
+  color: #fff !important;
+  background: #00d1cd;
+}
+.vc__calc {
+  align-self: center;
+}
+.vc__add:focus {
+  outline: none;
+}
+.vc__calc:focus,
+.vc__calc:active:focus,
+.vc__calc.active:focus {
+  outline: none;
+}
+.vc_list {
+  margin-top: 3rem;
+}
+
+/* @media screen and (max-width: 850px) {
+  .vc_list {
+    margin-top: 0rem;
+    margin-bottom: 2rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .vc_list {
+    margin-top: 2rem;
+  }
+} */
+.logo {
+  height: 10rem;
+  width: 10rem;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  object-fit: fill;
+}
