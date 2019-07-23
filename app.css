@@ -81,7 +81,13 @@ body {
 .vc_list {
   margin-top: 3rem;
 }
-
+.error {
+  color: red;
+  display: block;
+}
+.no-error {
+  display: none;
+}
 /* @media screen and (max-width: 850px) {
   .vc_list {
     margin-top: 0rem;
