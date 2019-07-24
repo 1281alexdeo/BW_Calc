@@ -22,13 +22,13 @@ const VC_Controller = (function() {
   return {
     addItem: function(name, pri, min, max, exp) {
       //create new id
-      let ID = data.vc[data.vc.length - 1] + 1;
+      let ID = data.vc.length + 1;
       //create new item
       let newItem = new VirtChanel(ID, name, pri, min, max, exp);
       //push new item into data structure
       data.vc.push(newItem);
       //Return the new element
-
+      console.log(data.vc);
       return newItem;
     }
   };
@@ -74,6 +74,16 @@ const UIcontroller = (function() {
         pri: document.getElementById('pri').value,
         exp: document.getElementById('exp').value
       };
+    },
+    clearInput: function() {
+      return {
+        name: (document.getElementById('name').value = ''),
+        availBw: (document.getElementById('avail_bw').value = ''),
+        min: (document.getElementById('min').value = ''),
+        max: (document.getElementById('max').value = ''),
+        pri: (document.getElementById('pri').value = ''),
+        exp: (document.getElementById('exp').value = '')
+      };
     }
   };
 })();
@@ -90,6 +100,7 @@ btn_add.addEventListener('click', () => {
     inputs.exp
   );
   console.log('added', addedItem);
+  UIcontroller.clearInput();
 
   let li = document.createElement('li');
   li.classList = 'd-flex list-group-item vc-list-item  justify-content-between';
