@@ -120,20 +120,20 @@ btn_add.addEventListener('click', () => {
     parent.removeChild(el);
   });
 
-  let Avail_BW = 10;
-  const sum = Virtual_Chanels.reduce((acc, vc) => {
-    let total_pri = vc.priority + acc;
-    return total_pri;
-  }, 0);
-
-  const bandwidth = (sum_of_pri, avail_bw) => {
-    Virtual_Chanels.map(vc => {
-      let result = (vc.priority / sum_of_pri) * avail_bw;
-      vc.calculatedBW = result;
-      console.log(`${vc.name}: bandwidth: ${vc.calculatedBW.toFixed(2)}`);
-    });
-  };
-
   console.log(bandwidth(sum, Avail_BW));
   // console.log(Virtual_Chanels);
 });
+
+// let Avail_BW = 10;
+//   const sum = Virtual_Chanels.reduce((acc, vc) => {
+//     let total_pri = vc.priority + acc;
+//     return total_pri;
+//   }, 0);
+
+//   const bandwidth = (sum_of_pri, avail_bw) => {
+//     Virtual_Chanels.map(vc => {
+//       let result = (vc.priority / sum_of_pri) * avail_bw;
+//       vc.calculatedBW = result;
+//       console.log(`${vc.name}: bandwidth: ${vc.calculatedBW.toFixed(2)}`);
+//     });
+//   };
