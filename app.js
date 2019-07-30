@@ -16,13 +16,28 @@ const VC_Controller = (function() {
   };
   let data = {
     availableBw: 10,
-    vc: []
+    vc: [],
+    priTotal: 0
+  };
+  const calcPriSum = function() {
+    let sum = 0;
+    if (data.vc.length > 0) {
+      data.vc.forEach(cur => {
+        sum = sum + cur.pri;
+      });
+    }
+    data.priTotal = sum;
   };
 
   //public methods
   return {
     testing: function() {
       return data;
+    },
+    calculateBW: function() {
+      //calculate total priority
+      calcPriSum();
+      //calculate BW usingformular
     },
     addItem: function(name, pri, min, max, exp) {
       //create new id
@@ -40,14 +55,6 @@ const VC_Controller = (function() {
     },
     getAvailableBW: function() {
       return data.availableBw;
-    },
-    calcPriSum: function() {
-      if (data.vc.length != 0) {
-        data.vc.reduce((acc, vc) => {
-          let total_pri = vc.VirtChanel.pri + acc;
-          return total_pri;
-        }, 0);
-      }
     }
   };
 })();
@@ -129,11 +136,8 @@ btn_add.addEventListener('click', () => {
 
 //Calculate Bandwidth
 const updateResult = function() {
-  console.log('result funciton running');
-  //calculate VC pri sum
-  let prisum = VC_Controller.calcPriSum();
-  console.log('PRISUM', prisum);
   //calculate total priority of all vc
+  VC_Controller.calculateBW();
   //check if min max and exp
   //calculate bandwidth using formular
   //return calculated BW
