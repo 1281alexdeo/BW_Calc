@@ -4,9 +4,9 @@ const vc_list = document
   .getElementById('wrapper-card')
   .getElementsByTagName('ul')[0];
 
-//VC_Controller
+//========    VC_Controller   ============
 const VC_Controller = (function() {
-  let VirtChanel = function(id, name, pri, min, max, exp) {
+  let VirtChanel = function(id, name, pri = 0, min = 0, max = 0, exp = 0) {
     this.id = id;
     this.name = name;
     this.pri = pri;
@@ -18,8 +18,12 @@ const VC_Controller = (function() {
     availableBw: 10,
     vc: []
   };
+
   //public methods
   return {
+    testing: function() {
+      return data;
+    },
     addItem: function(name, pri, min, max, exp) {
       //create new id
       let ID = data.vc.length + 1;
@@ -30,50 +34,62 @@ const VC_Controller = (function() {
       //Return the new element
       console.log(data.vc);
       return newItem;
+    },
+    setAvailBW: function(bw) {
+      data.availableBw = bw;
+    },
+    getAvailableBW: function() {
+      return data.availableBw;
+    },
+    calcPriSum: function() {
+      if (data.vc.length != 0) {
+        data.vc.reduce((acc, vc) => {
+          let total_pri = vc.VirtChanel.pri + acc;
+          return total_pri;
+        }, 0);
+      }
     }
   };
 })();
 
-Virtual_Chanels = [
-  {
-    name: 'P2P',
-    priority: 1,
-    min: null,
-    max: null,
-    expedite: null,
-    calculatedBW: 0
-  },
-  {
-    name: 'VOIP',
-    priority: 2,
-    min: null,
-    max: null,
-    expedite: null,
-    calculatedBW: 0
-  },
-  {
-    name: 'Streaming',
-    priority: 3,
-    min: null,
-    max: null,
-    expedite: null,
-    calculatedBW: 0
-  }
-];
-
-//UI Controller
+//=========   UI Controller   ============
 const UIcontroller = (function() {
   return {
     getInput: function() {
       return {
         // name avail_bw min max expedite pri
         name: document.getElementById('name').value,
-        availBw: document.getElementById('avail_bw').value,
-        min: document.getElementById('min').value,
-        max: document.getElementById('max').value,
-        pri: document.getElementById('pri').value,
-        exp: document.getElementById('exp').value
+        availBw: parseFloat(document.getElementById('avail_bw').value),
+        min: parseFloat(document.getElementById('min').value),
+        max: parseFloat(document.getElementById('max').value),
+        pri: parseFloat(document.getElementById('pri').value),
+        exp: parseFloat(document.getElementById('exp').value)
       };
+    },
+    getEventListners: function() {
+      return {
+        calcBtn: document.getElementById('btn-calc')
+      };
+    },
+    addListItem: function(obj) {
+      let html = `<li
+      class="vc d-flex justify-content-between align-items-center list-group-item"
+    >
+      <div class="vc__name">${obj.name}</div>
+      <div class="vc__delete">
+        <button class="btn btn-outline-danger">
+          <i id="icon-trash" class="fas fa-trash "></i>
+        </button>
+      </div>
+    </li>`;
+      vc_list.insertAdjacentHTML('beforeend', html);
+    },
+    validateInput: function(input) {
+      if (input.name == '') {
+        return alert('please enter VC name');
+      } else if (input.availBw == '' || isNaN(input.availBw)) {
+        return alert('Please enter Avail BW');
+      }
     },
     clearInput: function() {
       return {
@@ -90,39 +106,45 @@ const UIcontroller = (function() {
 
 //Add Button
 btn_add.addEventListener('click', () => {
-  let inputs = UIcontroller.getInput();
-  console.log(inputs);
-  let addedItem = VC_Controller.addItem(
-    inputs.name,
-    inputs.pri,
-    inputs.min,
-    inputs.max,
-    inputs.exp
-  );
-  console.log('added', addedItem);
+  let inputs, newItem;
+  inputs = UIcontroller.getInput();
+
+  //  add the new item into UI
+  if (inputs.name !== '' && !isNaN(inputs.availBw) && inputs.availBw > 0) {
+    newItem = VC_Controller.addItem(
+      inputs.name,
+      inputs.pri,
+      inputs.min,
+      inputs.max,
+      inputs.exp
+    );
+    //set the available bandwidth
+    VC_Controller.setAvailBW(inputs.availBw);
+
+    UIcontroller.addListItem(newItem);
+  }
+
   UIcontroller.clearInput();
-
-  let li = document.createElement('li');
-  li.classList = 'd-flex list-group-item vc-list-item  justify-content-between';
-  // !inputs.name ? (li.textContent = none) : (li.textContent = `${inputs.name} `);
-
-  const i = document.createElement('i');
-  i.innerHTML = `<span><i id="icon-trash" class="fas fa-trash"></i></span>`;
-  li.classList = 'list-group-item d-flex  vc-list-item justify-content-between';
-  li.appendChild(i);
-  vc_list.appendChild(li);
-
-  console.log(Virtual_Chanels);
-
-  i.addEventListener('click', e => {
-    let el = e.target.parentNode.parentNode.parentElement;
-    let parent = vc_list;
-    parent.removeChild(el);
-  });
-
-  console.log(bandwidth(sum, Avail_BW));
-  // console.log(Virtual_Chanels);
 });
+
+//Calculate Bandwidth
+const updateResult = function() {
+  console.log('result funciton running');
+  //calculate VC pri sum
+  let prisum = VC_Controller.calcPriSum();
+  console.log('PRISUM', prisum);
+  //calculate total priority of all vc
+  //check if min max and exp
+  //calculate bandwidth using formular
+  //return calculated BW
+  //Update UI table with the result
+};
+const UiBtn = UIcontroller.getEventListners();
+UiBtn.calcBtn.addEventListener('click', function() {
+  updateResult();
+  console.log('CALCULATEIONS');
+});
+// console.log(bandwidth(sum, Avail_BW));
 
 // let Avail_BW = 10;
 //   const sum = Virtual_Chanels.reduce((acc, vc) => {

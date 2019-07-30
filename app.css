@@ -63,6 +63,9 @@ body {
   color: #444444 !important;
   border-color: #00d1cd;
 }
+.btn-outline-info:focus {
+  box-shadow: none;
+}
 .btn-outline-info:hover {
   color: #fff !important;
   background: #00d1cd;
@@ -73,15 +76,20 @@ body {
 .vc__add:focus {
   outline: none;
 }
-.vc__calc:focus,
+.btn-outline-dark:focus {
+  box-shadow: none !important;
+}
+/* .vc__calc:focus,
 .vc__calc:active:focus,
 .vc__calc.active:focus {
   outline: none;
-}
+} */
 .vc_list {
   margin-top: 3rem;
 }
-
+.res__title {
+  color: #00d1cd;
+}
 /* @media screen and (max-width: 850px) {
   .vc_list {
     margin-top: 0rem;
