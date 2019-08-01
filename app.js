@@ -17,16 +17,18 @@ const VC_Controller = (function() {
   let data = {
     availableBw: 10,
     vc: [],
-    priTotal: 0
+    priTotal: 0,
+    results: []
   };
+
   const calcPriSum = function() {
     let sum = 0;
     if (data.vc.length > 0) {
       data.vc.forEach(cur => {
         sum = sum + cur.pri;
+        data.priTotal = sum;
       });
     }
-    data.priTotal = sum;
   };
 
   //public methods
@@ -38,7 +40,12 @@ const VC_Controller = (function() {
       //calculate total priority
       calcPriSum();
       //calculate BW usingformular
+      data.vc.map(item => {
+        let bw = (item.pri / data.priTotal) * data.availableBw;
+        data.results.push(bw.toFixed(2));
+      });
     },
+
     addItem: function(name, pri, min, max, exp) {
       //create new id
       let ID = data.vc.length + 1;
@@ -137,7 +144,8 @@ btn_add.addEventListener('click', () => {
 //Calculate Bandwidth
 const updateResult = function() {
   //calculate total priority of all vc
-  VC_Controller.calculateBW();
+  let res = VC_Controller.calculateBW();
+  console.log(res);
   //check if min max and exp
   //calculate bandwidth using formular
   //return calculated BW
@@ -146,15 +154,8 @@ const updateResult = function() {
 const UiBtn = UIcontroller.getEventListners();
 UiBtn.calcBtn.addEventListener('click', function() {
   updateResult();
-  console.log('CALCULATEIONS');
+  console.log('WORKING!!');
 });
-// console.log(bandwidth(sum, Avail_BW));
-
-// let Avail_BW = 10;
-//   const sum = Virtual_Chanels.reduce((acc, vc) => {
-//     let total_pri = vc.priority + acc;
-//     return total_pri;
-//   }, 0);
 
 //   const bandwidth = (sum_of_pri, avail_bw) => {
 //     Virtual_Chanels.map(vc => {
