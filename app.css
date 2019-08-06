@@ -7,6 +7,9 @@
 body {
   margin: 0 0;
 }
+#vc_list {
+  margin-top: -10px;
+}
 .nav-bar {
   padding-left: 2.5rem;
   background-color: #00d1cd !important;
@@ -39,6 +42,14 @@ body {
   grid-template-columns: 50% 50%;
   grid-template-rows: 1fr 1fr 1fr 1fr;
 }
+.vc {
+  /* margin-top: -10px; */
+  padding: 5px;
+}
+.vc__lable {
+  margin-top: -36px;
+}
+
 .vc_name {
   grid-column-start: span 2;
 }

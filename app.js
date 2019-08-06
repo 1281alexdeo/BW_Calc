@@ -20,7 +20,6 @@ const VC_Controller = (function() {
     priTotal: 0,
     results: []
   };
-
   const calcPriSum = function() {
     let sum = 0;
     if (data.vc.length > 0) {
@@ -30,7 +29,6 @@ const VC_Controller = (function() {
       });
     }
   };
-
   //public methods
   return {
     testing: function() {
@@ -45,7 +43,6 @@ const VC_Controller = (function() {
         data.results.push(bw.toFixed(2));
       });
     },
-
     addItem: function(name, pri, min, max, exp) {
       //create new id
       let ID = data.vc.length + 1;
@@ -58,7 +55,13 @@ const VC_Controller = (function() {
       return newItem;
     },
     setAvailBW: function(bw) {
-      data.availableBw = bw;
+      data.vc.forEach(item => {
+        if (item.min > 0) {
+          data.availableBw = bw - item.min;
+        } else {
+          data.availableBw = bw;
+        }
+      });
     },
     getAvailableBW: function() {
       return data.availableBw;
@@ -91,8 +94,8 @@ const UIcontroller = (function() {
     >
       <div class="vc__name">${obj.name}</div>
       <div class="vc__delete">
-        <button class="btn btn-outline-danger">
-          <i id="icon-trash" class="fas fa-trash "></i>
+        <button class="btn btn-sm btn-outline-danger">
+          X
         </button>
       </div>
     </li>`;
@@ -136,6 +139,8 @@ btn_add.addEventListener('click', () => {
     VC_Controller.setAvailBW(inputs.availBw);
 
     UIcontroller.addListItem(newItem);
+  } else {
+    alert('Please Enter VC Name');
   }
 
   UIcontroller.clearInput();
