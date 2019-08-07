@@ -11,11 +11,20 @@ body {
   margin-top: -10px;
 }
 .nav-bar {
-  padding-left: 2.5rem;
+  padding: 0.5rem 2.5rem !important;
   background-color: #00d1cd !important;
+}
+.nav_container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 .heading {
   text-align: center;
+}
+.brand_name {
+  margin-left: -2.5rem;
+  font-size: 30px;
 }
 .fa-trash {
   cursor: pointer;
