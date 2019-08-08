@@ -15,7 +15,7 @@ const VC_Controller = (function() {
     this.exp = exp;
   };
   let data = {
-    availableBw: 10,
+    availableBw: 0,
     vc: [],
     priTotal: 0,
     results: []
@@ -34,15 +34,6 @@ const VC_Controller = (function() {
     testing: function() {
       return data;
     },
-    calculateBW: function() {
-      //calculate total priority
-      calcPriSum();
-      //calculate BW usingformular
-      data.vc.map(item => {
-        let bw = (item.pri / data.priTotal) * data.availableBw;
-        data.results.push(bw.toFixed(2));
-      });
-    },
     addItem: function(name, pri, min, max, exp) {
       //create new id
       let ID = data.vc.length + 1;
@@ -51,20 +42,34 @@ const VC_Controller = (function() {
       //push new item into data structure
       data.vc.push(newItem);
       //Return the new element
-      console.log(data.vc);
       return newItem;
     },
     setAvailBW: function(bw) {
+      console.log('setting avail bandwidth');
+      let totalmin = 0;
       data.vc.forEach(item => {
         if (item.min > 0) {
-          data.availableBw = bw - item.min;
-        } else {
-          data.availableBw = bw;
+          totalmin += item.min;
         }
       });
+      data.availableBw = bw - totalmin;
     },
     getAvailableBW: function() {
       return data.availableBw;
+    },
+    calculateBW: function(avail) {
+      //calculate total priority
+      calcPriSum();
+      //set available bandwidth
+      // // let input = UIcontroller.getInput();
+      // // this.setAvailBW(input.availBw);
+      // //get the available bandwidth
+      // let avbw = this.getAvailableBW();
+      //calculate BW usingformular
+      data.vc.map(item => {
+        let bw = (item.pri / data.priTotal) * avail;
+        data.results.push(bw.toFixed(2));
+      });
     }
   };
 })();
@@ -111,7 +116,7 @@ const UIcontroller = (function() {
     clearInput: function() {
       return {
         name: (document.getElementById('name').value = ''),
-        availBw: (document.getElementById('avail_bw').value = ''),
+        // availBw: (document.getElementById('avail_bw').value = ''),
         min: (document.getElementById('min').value = ''),
         max: (document.getElementById('max').value = ''),
         pri: (document.getElementById('pri').value = ''),
@@ -127,7 +132,7 @@ btn_add.addEventListener('click', () => {
   inputs = UIcontroller.getInput();
 
   //  add the new item into UI
-  if (inputs.name !== '' && !isNaN(inputs.availBw) && inputs.availBw > 0) {
+  if (inputs.name !== '') {
     newItem = VC_Controller.addItem(
       inputs.name,
       inputs.pri,
@@ -136,7 +141,7 @@ btn_add.addEventListener('click', () => {
       inputs.exp
     );
     //set the available bandwidth
-    VC_Controller.setAvailBW(inputs.availBw);
+    // VC_Controller.setAvailBW(inputs.availBw);
 
     UIcontroller.addListItem(newItem);
   } else {
@@ -148,10 +153,16 @@ btn_add.addEventListener('click', () => {
 
 //Calculate Bandwidth
 const updateResult = function() {
+  let input = UIcontroller.getInput();
+  VC_Controller.setAvailBW(input.availBw);
+
+  let avbw = VC_Controller.getAvailableBW();
+  // let bw = VC_Controller.getAvailableBW();
   //calculate total priority of all vc
-  let res = VC_Controller.calculateBW();
-  console.log(res);
+  VC_Controller.calculateBW(avbw);
+
   //check if min max and exp
+
   //calculate bandwidth using formular
   //return calculated BW
   //Update UI table with the result
