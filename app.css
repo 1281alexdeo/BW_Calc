@@ -7,6 +7,10 @@
 body {
   margin: 0 0;
 }
+.font_btn {
+  font-size: 24px;
+  font-weight: 600;
+}
 #vc_list {
   margin-top: -10px;
 }
@@ -14,6 +18,7 @@ body {
   padding: 0.5rem 2.5rem !important;
   background-color: #00d1cd !important;
 }
+
 .nav_container {
   display: flex;
   justify-content: end;
@@ -21,6 +26,14 @@ body {
   align-items: center;
   /* justify-content: space-evenly; */
   width: 100%;
+}
+.nav__setAvailBW {
+  width: 545px;
+  flex-direction: column;
+  align-self: center;
+  position: absolute;
+  top: 23%;
+  justify-self: center;
 }
 .heading {
   text-align: center;
