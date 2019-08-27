@@ -90,16 +90,15 @@ const UIcontroller = (function() {
     },
     getEventListners: function() {
       return {
-        calcBtn: document.getElementById('btn-calc')
+        calcBtn: document.getElementById('btn-calc'),
+        btnSetBW: document.getElementById('btn-setbw')
       };
     },
     addListItem: function(vc) {
       let html = `<li
       class="vc d-flex justify-content-between align-items-center list-group-item"
     >
-      <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${
-        vc.pri
-      }</div>
+      <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${vc.pri}</div>
       <div class="vc__delete">
         <button class="btn btn-sm btn-outline-danger">
           X
@@ -155,8 +154,6 @@ btn_add.addEventListener('click', () => {
 
 //Calculate Bandwidth
 const updateResult = function() {
-  let input = UIcontroller.getInput();
-  VC_Controller.setAvailBW(input.availBw);
   let avbw = VC_Controller.getAvailableBW();
   VC_Controller.calculateBW(avbw);
 };
@@ -165,4 +162,11 @@ const UiBtn = UIcontroller.getEventListners();
 UiBtn.calcBtn.addEventListener('click', function() {
   updateResult();
   console.log('WORKING!!');
+});
+
+const btnSetBandwidth = UIcontroller.getEventListners().btnSetBW;
+btnSetBandwidth.addEventListener('click', () => {
+  let input = UIcontroller.getInput();
+  VC_Controller.setAvailBW(input.availBw);
+  // console.log('SETTINGSSSS BANDWIDTH');
 });
