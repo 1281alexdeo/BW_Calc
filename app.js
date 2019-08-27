@@ -38,6 +38,11 @@ const VC_Controller = (function() {
     addItem: function(name, pri, min, max, exp) {
       //create new id
       let ID = data.vc.length + 1;
+      //check if min max and exp are not underfined
+      max = max || 0;
+      min = min || 0;
+      exp = exp || 0;
+      pri = pri || 'BE';
       //create new item
       let newItem = new VirtChanel(ID, name, pri, min, max, exp);
       //push new item into data structure
@@ -88,11 +93,13 @@ const UIcontroller = (function() {
         calcBtn: document.getElementById('btn-calc')
       };
     },
-    addListItem: function(obj) {
+    addListItem: function(vc) {
       let html = `<li
       class="vc d-flex justify-content-between align-items-center list-group-item"
     >
-      <div class="vc__name">${obj.name}</div>
+      <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${
+        vc.pri
+      }</div>
       <div class="vc__delete">
         <button class="btn btn-sm btn-outline-danger">
           X
@@ -102,10 +109,10 @@ const UIcontroller = (function() {
       vc_list.insertAdjacentHTML('beforeend', html);
     },
     validateInput: function(input) {
-      if (input.name == '') {
-        return alert('please enter VC name');
-      } else if (input.availBw == '' || isNaN(input.availBw)) {
-        return alert('Please enter Avail BW');
+      if (input.availBw == '') {
+        return alert('Please Enter Available Bandwidth');
+      } else if (input.name == '') {
+        return alert('please enter VC name ');
       }
     },
     clearInput: function() {
