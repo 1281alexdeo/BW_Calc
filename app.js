@@ -1,8 +1,15 @@
 let btn_add = document.querySelector('#btn-add');
-let vc_list_item = document.getElementById('vc_list').innerHTML;
-const vc_list = document
-  .getElementById('wrapper-card')
-  .getElementsByTagName('ul')[0];
+let vc_list_item = document.getElementById('vc_list');
+// const vc_list = document
+//   .getElementById('wrapper-card')
+//   .getElementsByTagName('ul')[0];
+
+vc_list.addEventListener('click', function(e) {
+  if (e.target.className == 'delete') {
+    const li = e.target.parentElement;
+    vc_list.removeChild(li);
+  }
+});
 
 //========    VC_Controller   ============
 const VC_Controller = (function() {
@@ -52,13 +59,14 @@ const VC_Controller = (function() {
     },
     setAvailBW: function(bw) {
       console.log('setting avail bandwidth');
-      let totalmin = 0;
-      data.vc.forEach(item => {
-        if (item.min > 0) {
-          totalmin += item.min;
-        }
-      });
-      data.availableBw = bw - totalmin;
+      // let totalmin = 0;
+      // data.vc.forEach(item => {
+      //   if (item.min > 0) {
+      //     totalmin += item.min;
+      //   }
+      // });
+      // data.availableBw = bw - totalmin;
+      data.availableBw = bw;
     },
     getAvailableBW: function() {
       return data.availableBw;
@@ -100,7 +108,7 @@ const UIcontroller = (function() {
     >
       <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${vc.pri}</div>
       <div class="vc__delete">
-        <button class="btn btn-sm btn-outline-danger">
+        <button id="btn_vc_delete" class="btn btn-sm btn-outline-danger delete">
           X
         </button>
       </div>
@@ -134,6 +142,14 @@ btn_add.addEventListener('click', () => {
 
   //  add the new item into UI
   if (inputs.name !== '') {
+    let totalmin = 0;
+    if (inputs.min > 0) {
+      totalmin += inputs.min;
+    }
+    avBW = VC_Controller.getAvailableBW();
+    avBW = avBW - totalmin;
+    VC_Controller.setAvailBW(avBW);
+
     newItem = VC_Controller.addItem(
       inputs.name,
       inputs.pri,
@@ -141,14 +157,11 @@ btn_add.addEventListener('click', () => {
       inputs.max,
       inputs.exp
     );
-    //set the available bandwidth
-    // VC_Controller.setAvailBW(inputs.availBw);
 
     UIcontroller.addListItem(newItem);
   } else {
     alert('Please Enter VC Name');
   }
-
   UIcontroller.clearInput();
 });
 
@@ -157,13 +170,13 @@ const updateResult = function() {
   let avbw = VC_Controller.getAvailableBW();
   VC_Controller.calculateBW(avbw);
 };
-
+//Caclulate button
 const UiBtn = UIcontroller.getEventListners();
 UiBtn.calcBtn.addEventListener('click', function() {
   updateResult();
   console.log('WORKING!!');
 });
-
+//set bandwidth button
 const btnSetBandwidth = UIcontroller.getEventListners().btnSetBW;
 btnSetBandwidth.addEventListener('click', () => {
   let input = UIcontroller.getInput();
