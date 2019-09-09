@@ -37,6 +37,14 @@ const UIcontroller = (function() {
     </li>`;
       vc_list.insertAdjacentHTML('beforeend', html);
     },
+    deleteListItem: function(selectorID) {
+      console.log('UI_deletelistItem called ', selectorID);
+      let parent = document.getElementById(selectorID).parentNode;
+      let el = document.getElementById(selectorID);
+      console.log(el);
+      console.log(parent);
+      parent.removeChild(el);
+    },
     validateInput: function(input) {
       if (input.availBw == '') {
         return alert('Please Enter Available Bandwidth');
@@ -222,13 +230,20 @@ const APP_Controler = (function(UIctrl, VCctrl) {
   const ctrlDeleteItem = function(e) {
     let itemID;
     //get ID of the target's parent Node
-    console.log('NODEID=', e.target.parentNode.id);
     itemID = parseInt(e.target.parentNode.id);
-    console.log(typeof itemID);
-    if (itemID) {
+
+    if (itemID >= 0) {
+      let idString;
       // 1. Delete item from the data structure
+
       VCctrl.deleteItem(itemID);
+      console.log('deleting item success...');
+
       // 2. Delete item from the UI
+      idString = itemID.toString();
+      UIctrl.deleteListItem(idString);
+      console.log(typeof idString);
+
       // 3. update and show result
     }
   };
