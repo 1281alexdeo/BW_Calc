@@ -12,7 +12,7 @@ body {
   font-weight: 600;
 }
 #vc_list {
-  margin-top: -10px;
+  /* margin-top: -5px; */
 }
 .nav-bar {
   padding: 0.5rem 2.5rem !important;
@@ -38,7 +38,9 @@ body {
   border: none;
   outline: none;
 }
-
+.glyphicon {
+  font-size: 3rem;
+}
 .btn__setbandwidth {
   background: #00d1cd;
   outline: none;
@@ -91,7 +93,8 @@ body {
   padding: 5px;
 }
 .vc__lable {
-  margin-top: -36px;
+  /* margin-top: -36px; */
+  margin-top: 3rem;
 }
 
 .vc_name {
@@ -136,9 +139,8 @@ body {
   box-shadow: none !important;
 }
 
-.vc_list {
-  margin-top: 3rem;
-}
+/* .vc_list {
+} */
 .res__title {
   color: #00d1cd;
 }

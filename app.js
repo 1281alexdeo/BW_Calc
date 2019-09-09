@@ -1,17 +1,64 @@
 let btn_add = document.querySelector('#btn-add');
-let vc_list_item = document.getElementById('vc_list');
-// const vc_list = document
-//   .getElementById('wrapper-card')
-//   .getElementsByTagName('ul')[0];
+let vc_list = document.getElementById('vc_list');
 
-vc_list.addEventListener('click', function(e) {
-  if (e.target.className == 'delete') {
-    const li = e.target.parentElement;
-    vc_list.removeChild(li);
-  }
-});
+// =========   UI MODULE   ============
 
-//========    VC_Controller   ============
+const UIcontroller = (function() {
+  let DOMstrings = {
+    virtChanelList: 'vc_list'
+  };
+  return {
+    getDOMstring: function() {
+      return DOMstrings;
+    },
+    getInput: function() {
+      return {
+        // name avail_bw min max expedite pri
+        name: document.getElementById('name').value,
+        availBw: parseFloat(document.getElementById('avail_bw').value),
+        min: parseFloat(document.getElementById('min').value),
+        max: parseFloat(document.getElementById('max').value),
+        pri: parseFloat(document.getElementById('pri').value),
+        exp: parseFloat(document.getElementById('exp').value)
+      };
+    },
+    getEventListners: function() {
+      return {
+        calcBtn: document.getElementById('btn-calc'),
+        btnSetBW: document.getElementById('btn-setbw')
+      };
+    },
+    addListItem: function(vc) {
+      let html = `<li id="${vc.id}" class="vc d-flex justify-content-between align-items-center list-group-item">
+      <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${vc.pri}</div>
+      <button id="btn-delete" class="delete btn btn-sm btn-outline-danger">
+       X
+      </button>
+    </li>`;
+      vc_list.insertAdjacentHTML('beforeend', html);
+    },
+    validateInput: function(input) {
+      if (input.availBw == '') {
+        return alert('Please Enter Available Bandwidth');
+      } else if (input.name == '') {
+        return alert('please enter VC name ');
+      }
+    },
+    clearInput: function() {
+      return {
+        name: (document.getElementById('name').value = ''),
+        // availBw: (document.getElementById('avail_bw').value = ''),
+        min: (document.getElementById('min').value = ''),
+        max: (document.getElementById('max').value = ''),
+        pri: (document.getElementById('pri').value = ''),
+        exp: (document.getElementById('exp').value = '')
+      };
+    }
+  };
+})();
+
+//==========================     DATA MODULE     ======================
+
 const VC_Controller = (function() {
   let VirtChanel = function(id, name, pri = 0, min = 0, max = 0, exp = 0) {
     this.id = id;
@@ -27,6 +74,7 @@ const VC_Controller = (function() {
     priTotal: 0,
     results: []
   };
+
   const calcPriSum = function() {
     let sum = 0;
     if (data.vc.length > 0) {
@@ -36,6 +84,7 @@ const VC_Controller = (function() {
       });
     }
   };
+
   //public methods
   return {
     data,
@@ -44,12 +93,17 @@ const VC_Controller = (function() {
     },
     addItem: function(name, pri, min, max, exp) {
       //create new id
-      let ID = data.vc.length + 1;
+      let ID;
+      if (data.vc.length > 0) {
+        ID = data.vc[data.vc.length - 1].id + 1;
+      } else {
+        ID = 0;
+      }
       //check if min max and exp are not underfined
       max = max || 0;
       min = min || 0;
       exp = exp || 0;
-      pri = pri || 'BE';
+      pri = pri || 0;
       //create new item
       let newItem = new VirtChanel(ID, name, pri, min, max, exp);
       //push new item into data structure
@@ -57,6 +111,23 @@ const VC_Controller = (function() {
       //Return the new element
       return newItem;
     },
+
+    deleteItem: function(id) {
+      let ids, index;
+
+      ids = data.vc.map(item => {
+        return item.id;
+      });
+
+      index = ids.indexOf(id);
+
+      //remove item if index exists i.e not -1
+      if (index !== -1) {
+        data.vc.splice(index, 1);
+      }
+      console.log(data.vc);
+    },
+
     setAvailBW: function(bw) {
       console.log('setting avail bandwidth');
       // let totalmin = 0;
@@ -82,73 +153,27 @@ const VC_Controller = (function() {
   };
 })();
 
-//=========   UI Controller   ============
-const UIcontroller = (function() {
-  return {
-    getInput: function() {
-      return {
-        // name avail_bw min max expedite pri
-        name: document.getElementById('name').value,
-        availBw: parseFloat(document.getElementById('avail_bw').value),
-        min: parseFloat(document.getElementById('min').value),
-        max: parseFloat(document.getElementById('max').value),
-        pri: parseFloat(document.getElementById('pri').value),
-        exp: parseFloat(document.getElementById('exp').value)
-      };
-    },
-    getEventListners: function() {
-      return {
-        calcBtn: document.getElementById('btn-calc'),
-        btnSetBW: document.getElementById('btn-setbw')
-      };
-    },
-    addListItem: function(vc) {
-      let html = `<li
-      class="vc d-flex justify-content-between align-items-center list-group-item"
-    >
-      <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${vc.pri}</div>
-      <div class="vc__delete">
-        <button id="btn_vc_delete" class="btn btn-sm btn-outline-danger delete">
-          X
-        </button>
-      </div>
-    </li>`;
-      vc_list.insertAdjacentHTML('beforeend', html);
-    },
-    validateInput: function(input) {
-      if (input.availBw == '') {
-        return alert('Please Enter Available Bandwidth');
-      } else if (input.name == '') {
-        return alert('please enter VC name ');
-      }
-    },
-    clearInput: function() {
-      return {
-        name: (document.getElementById('name').value = ''),
-        // availBw: (document.getElementById('avail_bw').value = ''),
-        min: (document.getElementById('min').value = ''),
-        max: (document.getElementById('max').value = ''),
-        pri: (document.getElementById('pri').value = ''),
-        exp: (document.getElementById('exp').value = '')
-      };
-    }
-  };
-})();
-
 //Add Button
 btn_add.addEventListener('click', () => {
-  let inputs, newItem;
+  let inputs, newItem, avBW;
   inputs = UIcontroller.getInput();
+  avBW = VC_Controller.getAvailableBW();
 
   //  add the new item into UI
   if (inputs.name !== '') {
     let totalmin = 0;
+    let totalexp = 0;
     if (inputs.min > 0) {
       totalmin += inputs.min;
+      avBW = avBW - totalmin;
+      VC_Controller.setAvailBW(avBW);
     }
-    avBW = VC_Controller.getAvailableBW();
-    avBW = avBW - totalmin;
-    VC_Controller.setAvailBW(avBW);
+    if (inputs.exp > 0) {
+      totalexp += inputs.exp;
+      // avBW = VC_Controller.getAvailableBW();
+      avBW = avBW - totalexp;
+      VC_Controller.setAvailBW(avBW);
+    }
 
     newItem = VC_Controller.addItem(
       inputs.name,
@@ -183,3 +208,37 @@ btnSetBandwidth.addEventListener('click', () => {
   VC_Controller.setAvailBW(input.availBw);
   // console.log('SETTINGSSSS BANDWIDTH');
 });
+
+//============================    APP MODULE   ===========================
+
+const APP_Controler = (function(UIctrl, VCctrl) {
+  //Setup event listeners
+  const setupEventListeners = function() {
+    let DOM = UIctrl.getDOMstring();
+    document
+      .getElementById(DOM.virtChanelList)
+      .addEventListener('click', ctrlDeleteItem);
+  };
+  const ctrlDeleteItem = function(e) {
+    let itemID;
+    //get ID of the target's parent Node
+    console.log('NODEID=', e.target.parentNode.id);
+    itemID = parseInt(e.target.parentNode.id);
+    console.log(typeof itemID);
+    if (itemID) {
+      // 1. Delete item from the data structure
+      VCctrl.deleteItem(itemID);
+      // 2. Delete item from the UI
+      // 3. update and show result
+    }
+  };
+  return {
+    init: function() {
+      console.log('THE APPLICATION HAS STARTED');
+      setupEventListeners();
+    }
+  };
+})(UIcontroller, VC_Controller);
+
+//INIT
+APP_Controler.init();

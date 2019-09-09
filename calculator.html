@@ -34,8 +34,9 @@
             placeholder="Available Bandwidth"
           />
         </div>
-        <button class="btn__setbandwidth" id="btn-setbw">
-          <img src="./images/tick.svg" alt="tick" width="40px" height="40px" />
+        <button type="button" class="btn__setbandwidth" id="btn-setbw">
+          <!-- <img src="./images/tick.svg" alt="tick" width="40px" height="40px" /> -->
+          <img src="./images/tick.svg" alt="" width="40px" height="40px" />
         </button>
       </div>
     </nav>
@@ -88,7 +89,7 @@
                 <div>
                   <label for="select">Pri </label>
                   <select id="pri" class="custom-select">
-                    <option id="select" value="0">Best Effort</option>
+                    <option id="select" value="0">BE</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -117,17 +118,14 @@
             <!-- <div class="d-flex justify-content-end control">
                 <button id="btn-add" class="btn-primary btn btn-md">Add VC</button>
               </div> -->
-
             <p class="vc__lable">Virtual Channels</p>
 
-            <div id="wrapper-card" class="">
-              <ul
-                id="vc_list"
-                class=" d-flex justify-content-between list-group "
-              >
-                <!-- dynamically add VC's here -->
-              </ul>
-            </div>
+            <ul
+              id="vc_list"
+              class=" d-flex justify-content-between list-group "
+            >
+              <!-- dynamically add VC's here -->
+            </ul>
           </div>
         </div>
       </section>
