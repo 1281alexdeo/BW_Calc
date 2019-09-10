@@ -16,7 +16,7 @@ body {
 }
 .nav-bar {
   padding: 0.5rem 2.5rem !important;
-  background-color: #00d1cd !important;
+  background-color: #343a40 !important;
 }
 .nav__wrapper {
   display: flex;
@@ -25,6 +25,7 @@ body {
   align-content: center;
   width: 40%;
   height: 15%;
+  margin-left: 38px;
 }
 .logo {
   background-color: white;
@@ -32,7 +33,7 @@ body {
 
 .nav__setAvailBW {
   width: 540px;
-  padding: 5px 15px;
+  padding: 7px 15px;
   margin-right: 8px;
   border-radius: 5px;
   border: none;
@@ -42,15 +43,23 @@ body {
   font-size: 3rem;
 }
 .btn__setbandwidth {
-  background: #00d1cd;
-  outline: none;
-  border: none !important;
+  background: #343a40;
+  outline: white;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 25px;
 }
 .btn__setbandwidth:focus {
-  outline: none;
+  outline: none !important;
   border: none !important;
+  /* border: 1px solid white;
+  color: white; */
 }
-
+.right-wrapper {
+  background-color: white;
+  padding: 10px 10px;
+  margin-top: 26px;
+}
 .brand_name {
   font-size: 24px;
   color: white;
@@ -142,7 +151,7 @@ body {
 /* .vc_list {
 } */
 .res__title {
-  color: #00d1cd;
+  color: #343a40;
 }
 /* @media screen and (max-width: 850px) {
   .vc_list {
