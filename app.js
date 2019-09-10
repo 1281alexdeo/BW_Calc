@@ -29,12 +29,17 @@ const UIcontroller = (function() {
       };
     },
     addListItem: function(vc) {
-      let html = `<li id="${vc.id}" class="vc d-flex justify-content-between align-items-center list-group-item">
-      <div class="vc__name">${vc.name} | ${vc.min} |${vc.max}| ${vc.exp}|${vc.pri}</div>
-      <button id="btn-delete" class="delete btn btn-sm btn-outline-danger">
+      let html = `<di id="${vc.id}" class="vc  align-items-center list-group-item">
+     
+        <div style="color:#ed5107"> Name : ${vc.name} </div>
+        <div style="color:#ed5107"> Min : ${vc.min} </div>
+        <div style="color:#ed5107"> Max : ${vc.max} </div>
+        <div style="color:#ed5107"> Exp : ${vc.exp} </div>
+        <div style="color:#ed5107"> Priority : ${vc.pri}  </div>
+        <button id="btn-delete" class="delete btn btn-sm btn-outline-danger">
        X
       </button>
-    </li>`;
+    </di>`;
       vc_list.insertAdjacentHTML('beforeend', html);
     },
     deleteListItem: function(selectorID) {

@@ -120,6 +120,7 @@
               <div class="right-wrapper">
                 <p style="font-size: 20px">Virtual Channels</p>
                 <ul
+                style="overflow: hidden"
                 id="vc_list"
                 class=" d-flex justify-content-between list-group "
                 >
@@ -207,3 +208,16 @@
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
+
+
+
+
+<!-- <div class="vc__name">
+  <span style="color:#ed5107"> Name : ${vc.name}</span>
+  <span style="color:#ed5107"> Min : ${vc.min}</span>
+  <span style="color:#ed5107"> Max : ${vc.max}</span>
+  <span style="color:#ed5107"> Exp : ${vc.exp}</span>
+  <span style="color:#ed5107"> Priority : ${vc.pri}</span>
+</div> -->
+
+    |  Min: ${vc.min} | Max: ${vc.max} | Exp: ${vc.exp} | Priority: ${vc.pri}
