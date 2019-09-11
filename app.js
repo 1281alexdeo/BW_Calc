@@ -29,17 +29,16 @@ const UIcontroller = (function() {
       };
     },
     addListItem: function(vc) {
-      let html = `<di id="${vc.id}" class="vc  align-items-center list-group-item">
-     
-        <div style="color:#ed5107"> Name : ${vc.name} </div>
-        <div style="color:#ed5107"> Min : ${vc.min} </div>
-        <div style="color:#ed5107"> Max : ${vc.max} </div>
-        <div style="color:#ed5107"> Exp : ${vc.exp} </div>
-        <div style="color:#ed5107"> Priority : ${vc.pri}  </div>
-        <button id="btn-delete" class="delete btn btn-sm btn-outline-danger">
-       X
-      </button>
-    </di>`;
+      let html = `<div id="${vc.id}" class="vc  align-items-center list-group-item">
+      <div class="vc_desc">
+        <div style="color:#343a40 "> Name : ${vc.name} </div>
+        <div style="color:#343a40 "> Min : ${vc.min} </div>
+        <div style="color:#343a40 "> Max : ${vc.max} </div>
+        <div style="color:#343a40 "> Exp : ${vc.exp} </div>
+        <div style="color:#343a40 "> Priority : ${vc.pri}  </div>
+        <button id="btn-delete" class="delete btn btn-sm btn-outline-danger">X</button>
+        </div>
+    </div>`;
       vc_list.insertAdjacentHTML('beforeend', html);
     },
     deleteListItem: function(selectorID) {
@@ -235,7 +234,7 @@ const APP_Controler = (function(UIctrl, VCctrl) {
   const ctrlDeleteItem = function(e) {
     let itemID;
     //get ID of the target's parent Node
-    itemID = parseInt(e.target.parentNode.id);
+    itemID = parseInt(e.target.parentNode.parentNode.id);
 
     if (itemID >= 0) {
       let idString;
