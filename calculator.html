@@ -19,15 +19,37 @@
   </head>
   <body>
     <nav class="nav-bar navbar navbar-dark navbar-dark bg-info">
-      <a class="navbar-brand" href="#">BW Buddy </a>
+      <div class="nav__wrapper">
+        <div>
+          <img src="./images/Network.svg" alt="logo" />
+        </div>
+        <div>
+          <p class="brand_name">BUDDY</p>
+        </div>
+        <div>
+          <input
+            type="text"
+            class="nav__setAvailBW"
+            id="avail_bw"
+            placeholder="Available Bandwidth"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn__setbandwidth btn btn-light"
+          id="btn-setbw"
+        >
+          SET
+        </button>
+      </div>
     </nav>
 
     <div class="mt-5">
       <section class="section-top">
         <div class="row top-content">
-          <div class="col-lg-4 col-md-6 col-sm-12 section-top-right">
-            <form class="mt-3 needs-validation">
-              <div class="form_wrapper">
+          <div class="col-lg-5 col-md-6 col-sm-12 section-top-right">
+            <form>
+              <div class="form_wrapper py-3  mt-4">
                 <div class="form-group vc_name">
                   <label for="name"> VC Name</label>
                   <input
@@ -37,22 +59,13 @@
                     placeholder="VC Name"
                   />
                 </div>
-                <div class="form-group vc_avail">
-                  <label for="avail_bw"> Available BW</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="avail_bw"
-                    placeholder="Available BW"
-                  />
-                </div>
                 <div class="form-group">
                   <label for="min">Min </label>
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control form"
                     id="min"
-                    placeholder="Min"
+                    placeholder="Minimum"
                   />
                 </div>
 
@@ -62,7 +75,7 @@
                     type="email"
                     class="form-control"
                     id="max"
-                    placeholder="Max"
+                    placeholder="Maximum"
                   />
                   <div id="error" class="no-error">Error!</div>
                 </div>
@@ -80,47 +93,47 @@
                 <div>
                   <label for="select">Pri </label>
                   <select id="pri" class="custom-select">
-                    <option id="select">BE</option>
+                    <option id="select" value="0">BE</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="3">4</option>
+                    <option value="4">4</option>
                   </select>
                 </div>
-                <button
-                  id="btn-add"
-                  type="submit"
-                  class="btn btn-outline-info vc__add"
-                >
-                  <span>ADD </span>
+                <button id="btn-add" type="button" class="btn btn-dark vc__add">
+                  <span class="font_btn">ADD </span>
                 </button>
                 <button
                   id="btn-calc"
-                  type="submit"
-                  class="btn btn-outline-dark vc__calc"
+                  type="button"
+                  class="btn btn-dark font_btn vc__calc"
                 >
                   CALCULATE
                 </button>
               </div>
             </form>
           </div>
-          <div class="col-lg-8 col-md-6 col-sm-12 vc_list">
+
+          <div class="col-lg-7 col-md-6 col-sm-12 vc_list">
             <!-- <div class="d-flex justify-content-end control">
-            <button id="btn-add" class="btn-primary btn btn-md">Add VC</button>
-          </div> -->
-            <div id="wrapper-card" class="">
-              <ul
+                <button id="btn-add" class="btn-primary btn btn-md">Add VC</button>
+              </div> -->
+              <div class="right-wrapper">
+                <p style="font-size: 20px; margin-bottom: 0;">Virtual Channels</p>
+                <ul
+                style="overflow: hidden"
                 id="vc_list"
                 class=" d-flex justify-content-between list-group "
-              >
-                <!-- dynamically add VC's here -->
-              </ul>
-            </div>
+                >
+              </div>
+              <!-- dynamically add VC's here -->
+            </ul>
           </div>
         </div>
       </section>
       <section class="row mt-5 mb-4">
         <div class="col-lg-12 col-md-12 col-sm-12 table-result ">
+          <div class="res__title" style="font-size: 30px">RESULTS</div>
           <table class="table table-hover table-sm">
             <thead>
               <tr>
@@ -133,7 +146,7 @@
                 <th>Calculated Bandwidth</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tableData">
               <tr>
                 <th scope="row">1</th>
                 <td>P2P</td>

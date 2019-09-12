@@ -1,0 +1,9 @@
+<svg width="100" height="50" viewBox="0 0 141 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="5" y1="26" x2="5" y2="74" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<line x1="5" y1="-5" x2="24.1667" y2="-5" transform="matrix(0 -1 0.999999 -0.00100364 32.6372 63.5415)" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<line x1="48.0252" y1="32" x2="48.0252" y2="68" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<line x1="69.5378" y1="5" x2="69.5378" y2="95" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<line x1="89.9748" y1="32" x2="89.9748" y2="68" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<line x1="111.487" y1="40" x2="111.487" y2="60" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<line x1="133" y1="26" x2="133" y2="74" stroke="white" stroke-width="10" stroke-linecap="round"/>
+</svg>
