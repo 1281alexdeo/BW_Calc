@@ -126,13 +126,11 @@ const VC_Controller = (function() {
 
     deleteItem: function(id) {
       let ids, index;
-
       ids = data.vc.map(item => {
         return item.id;
       });
 
       index = ids.indexOf(id);
-
       //remove item if index exists i.e not -1
       if (index !== -1) {
         data.vc.splice(index, 1);
@@ -145,13 +143,6 @@ const VC_Controller = (function() {
 
     setAvailBW: function(bw) {
       console.log('setting avail bandwidth');
-      // let totalmin = 0;
-      // data.vc.forEach(item => {
-      //   if (item.min > 0) {
-      //     totalmin += item.min;
-      //   }
-      // });
-      // data.availableBw = bw - totalmin;
       data.availableBw = bw;
     },
     getAvailableBW: function() {
@@ -159,12 +150,17 @@ const VC_Controller = (function() {
     },
     calculateBW: function(avail) {
       //calculate total priority
+
       calcPriSum();
-      data.vc.map(item => {
+      data.vc.map((item, i) => {
         let bw = (item.pri / data.priTotal) * avail;
         item.bandwidth = bw.toFixed(2);
 
-        data.results.push(item);
+        if (data.results.indexOf(item) === -1) {
+          data.results.push(item);
+        } else {
+          return;
+        }
         // data.results.push(item, parseFloat(bw.toFixed(2)));
       });
     }
