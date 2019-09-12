@@ -36,7 +36,7 @@ const UIcontroller = (function() {
         <div style="color:#343a40 "> Max : ${vc.max} </div>
         <div style="color:#343a40 "> Exp : ${vc.exp} </div>
         <div style="color:#343a40 "> Priority : ${vc.pri}  </div>
-        <button id="btn-delete" class="delete btn btn-sm btn-outline-danger">X</button>
+        <button style="float-right; margin-right:-50px" id="btn-delete" class="delete btn btn-sm btn-outline-danger">X</button>
         </div>
     </div>`;
       vc_list.insertAdjacentHTML('beforeend', html);
@@ -159,7 +159,9 @@ const VC_Controller = (function() {
       calcPriSum();
       data.vc.map(item => {
         let bw = (item.pri / data.priTotal) * avail;
-        data.results.push(parseFloat(bw.toFixed(2)));
+        item.bandwidth = bw.toFixed(2);
+        data.results.push(item);
+        // data.results.push(item, parseFloat(bw.toFixed(2)));
       });
     }
   };

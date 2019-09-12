@@ -25,14 +25,14 @@ body {
   align-content: center;
   width: 40%;
   height: 15%;
-  margin-left: 38px;
+  margin-left: -5px;
 }
 .logo {
   background-color: white;
 }
 
 .nav__setAvailBW {
-  width: 540px;
+  width: 451px;
   padding: 7px 15px;
   margin-right: 8px;
   border-radius: 5px;
