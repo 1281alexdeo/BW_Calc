@@ -119,7 +119,7 @@ const VC_Controller = (function() {
       //create new item
       let newItem = new VirtChanel(ID, name, pri, min, max, exp);
       //push new item into data structure
-      data.vc.push(newItem);
+      data.vc.push({ ...newItem });
       //Return the new element
       return newItem;
     },
@@ -136,6 +136,9 @@ const VC_Controller = (function() {
       //remove item if index exists i.e not -1
       if (index !== -1) {
         data.vc.splice(index, 1);
+        console.log('deleting item from vc array');
+        data.results.splice(index, 1);
+        console.log('deleting item from results array');
       }
       console.log(data.vc);
     },
@@ -160,6 +163,7 @@ const VC_Controller = (function() {
       data.vc.map(item => {
         let bw = (item.pri / data.priTotal) * avail;
         item.bandwidth = bw.toFixed(2);
+
         data.results.push(item);
         // data.results.push(item, parseFloat(bw.toFixed(2)));
       });
