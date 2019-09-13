@@ -5,7 +5,9 @@
   font-size: 18px;
 }
 body {
-  margin: 0 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 .font_btn {
   font-size: 20px;
@@ -199,4 +201,12 @@ body {
 .vc_desc:hover .delete {
   animation: fadein forwards 0.2s;
   opacity: 1;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  background-color: #343a40;
+  color: white;
+  padding: 15px;
+  margin: 10vh 0 0 0;
 }
