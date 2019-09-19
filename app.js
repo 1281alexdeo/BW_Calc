@@ -29,15 +29,18 @@ const UIcontroller = (function() {
       };
     },
     addListItem: function(vc) {
-      let html = `<div id="${vc.id}" class="vc  align-items-center list-group-item">
+      let html = `<div style="margin-bottom:5px;  padding:5px 10px;" id="${vc.id}" class=" list-group-item">
       <div class="vc_desc">
-        <div style="color:#343a40 "> Name : ${vc.name} </div>
-        <div style="color:#343a40 "> Min : ${vc.min} </div>
-        <div style="color:#343a40 "> Max : ${vc.max} </div>
-        <div style="color:#343a40 "> Exp : ${vc.exp} </div>
-        <div style="color:#343a40 "> Priority : ${vc.pri}  </div>
-        <button style="float-right; margin-right:-50px" id="btn-delete" class="delete btn btn-sm btn-outline-danger">X</button>
+        <div style="color:#000 "> Name : ${vc.name} </div>
+        <div style="color:#000 "> Min : ${vc.min} </div>
+        <div style="color:#000 "> Max : ${vc.max} </div>
+        <div style="color:#000 "> Exp : ${vc.exp} </div>
+        <div style="color:#000 "> Priority : ${vc.pri}</div>
+        <div>
+        <button style="float-right; margin-right:-40px;" id="btn-delete" class="delete btn btn-sm  btn-outline-danger">X
+        </button>
         </div>
+      </div>
     </div>`;
       vc_list.insertAdjacentHTML('beforeend', html);
     },
@@ -148,6 +151,9 @@ const VC_Controller = (function() {
     getAvailableBW: function() {
       return data.availableBw;
     },
+    getResult: function() {
+      return data.results;
+    },
     calculateBW: function(avail) {
       //calculate total priority
 
@@ -206,8 +212,35 @@ btn_add.addEventListener('click', () => {
 
 //Calculate Bandwidth
 const updateResult = function() {
+  let html;
+
   let avbw = VC_Controller.getAvailableBW();
   VC_Controller.calculateBW(avbw);
+  let res = VC_Controller.getResult();
+  let table_data_header = document.getElementById('tableData');
+  //populate table with reuslts array
+
+  localStorage.setItem('res', JSON.stringify(res));
+
+  let LSres = JSON.parse(localStorage.getItem('res'));
+  console.log(typeof LSres.id, typeof res.id);
+  LSres.map(item => {
+    // if (LSres.indexOf(item) === -1) {
+    let html = ` <tr>
+        <th scope="row">${item.id}</th>
+        <td>${item.name}</td>
+        <td>${item.min} Mbps</td>
+        <td>${item.max} Mbps</td>
+        <td>${item.exp} Mbps</td>
+        <td>${item.pri}</td>
+        <td style="color:green">${item.bandwidth} Mbps</td>
+        </tr>`;
+
+    table_data_header.insertAdjacentHTML('beforeend', html);
+    // }
+
+    // localStorage.clear();
+  });
 };
 //Caclulate button
 const UiBtn = UIcontroller.getEventListners();
@@ -236,7 +269,7 @@ const APP_Controler = (function(UIctrl, VCctrl) {
   const ctrlDeleteItem = function(e) {
     let itemID;
     //get ID of the target's parent Node
-    itemID = parseInt(e.target.parentNode.parentNode.id);
+    itemID = parseInt(e.target.parentNode.parentNode.parentNode.id);
 
     if (itemID >= 0) {
       let idString;
@@ -248,7 +281,6 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       // 2. Delete item from the UI
       idString = itemID.toString();
       UIctrl.deleteListItem(idString);
-      console.log(typeof idString);
 
       // 3. update and show result
     }
