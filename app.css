@@ -33,7 +33,7 @@ body {
 
 .nav__setAvailBW {
   width: 451px;
-  padding: 7px 15px;
+  padding: 1px 15px;
   margin-right: 8px;
   border-radius: 5px;
   border: none;
@@ -47,7 +47,7 @@ body {
   outline: white;
   border: 1px solid white;
   color: white;
-  padding: 6px 25px;
+  padding: 1px 25px;
 }
 .btn__setbandwidth:focus {
   outline: none !important;
@@ -79,8 +79,7 @@ body {
 .top-content {
   display: flex;
   flex-wrap: wrap;
-  margin: auto;
-
+  margin: auto -10px;
   padding: 1rem 2.5rem;
   padding-bottom: 3rem;
 }
@@ -107,10 +106,19 @@ body {
   justify-content: space-evenly;
   align-items: center;
   align-self: center;
+  padding: 2px;
 }
 .form_wrapper label {
   display: inline-block;
   margin-bottom: -0.5rem;
+}
+
+.form_wrapper input {
+  background-color: #edf0f0;
+}
+
+.form_wrapper select {
+  background-color: #edf0f0;
 }
 
 .list-group-item {
@@ -196,7 +204,9 @@ body {
   padding-bottom: 0;
   margin: 0 0;
 }
-
+.vc:last-child {
+  margin-bottom: 5px;
+}
 .vc_desc {
   display: flex;
   justify-content: space-around;

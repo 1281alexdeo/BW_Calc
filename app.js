@@ -29,15 +29,15 @@ const UIcontroller = (function() {
       };
     },
     addListItem: function(vc) {
-      let html = `<div style="margin-bottom:5px;  padding:5px 10px;" id="${vc.id}" class=" list-group-item">
+      let html = `<div style="  padding:5px 10px;" id="${vc.id}" class=" vc list-group-item">
       <div class="vc_desc">
-        <div style="color:#000 "> Name : ${vc.name} </div>
-        <div style="color:#000 "> Min : ${vc.min} </div>
-        <div style="color:#000 "> Max : ${vc.max} </div>
-        <div style="color:#000 "> Exp : ${vc.exp} </div>
-        <div style="color:#000 "> Priority : ${vc.pri}</div>
+        <div style="color:#000;  flex-basis: 1;"> Name : ${vc.name} </div>
+        <div style="color:#000;  flex-basis: 1;"> Min : ${vc.min} </div>
+        <div style="color:#000;  flex-basis: 1;"> Max : ${vc.max} </div>
+        <div style="color:#000;  flex-basis: 1;"> Exp : ${vc.exp} </div>
+        <div style="color:#000;  flex-basis: 1;"> Priority : ${vc.pri} </div>
         <div>
-        <button style="float-right; margin-right:-40px;" id="btn-delete" class="delete btn btn-sm  btn-outline-danger">X
+        <button style="flex-wrap; float-right; margin-right:-40px;" id="btn-delete" class="delete btn btn-sm  btn-outline-danger">X
         </button>
         </div>
       </div>
@@ -53,7 +53,7 @@ const UIcontroller = (function() {
       parent.removeChild(el);
     },
     validateInput: function(input) {
-      if (input.availBw == '') {
+      if (input.availBw === 0) {
         return alert('Please Enter Available Bandwidth');
       } else if (input.name == '') {
         return alert('please enter VC name ');
