@@ -283,6 +283,11 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       UIctrl.deleteListItem(idString);
 
       // 3. update and show result
+      let table = document.getElementById('tableData');
+      let tablerow = document
+        .getElementById('tableData')
+        .getElementsByTagName('tr')[idString];
+      table.removeChild(tablerow);
     }
   };
   return {
