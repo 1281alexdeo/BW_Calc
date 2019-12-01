@@ -5,7 +5,8 @@ let vc_list = document.getElementById('vc_list');
 
 const UIcontroller = (function() {
   let DOMstrings = {
-    virtChanelList: 'vc_list'
+    virtChanelList: 'vc_list',
+    virtChanelForm: 'VC_form'
   };
   return {
     getDOMstring: function() {
@@ -68,6 +69,20 @@ const UIcontroller = (function() {
         pri: (document.getElementById('pri').value = ''),
         exp: (document.getElementById('exp').value = '')
       };
+    },
+
+    disableForm: function() {
+      let f = document.forms['VC_form'].getElementsByTagName('input');
+      let s = document.forms['VC_form'].getElementsByTagName('select');
+      s[0].disabled = true;
+      for (var i = 0; i < f.length; i++) f[i].disabled = true;
+    },
+
+    enableForm: function() {
+      let f = document.forms['VC_form'].getElementsByTagName('input');
+      let s = document.forms['VC_form'].getElementsByTagName('select');
+      s[0].disabled = false;
+      for (var i = 0; i < f.length; i++) f[i].disabled = false;
     }
   };
 })();
@@ -252,16 +267,22 @@ UiBtn.calcBtn.addEventListener('click', function() {
 const btnSetBandwidth = UIcontroller.getEventListners().btnSetBW;
 btnSetBandwidth.addEventListener('click', () => {
   let input = UIcontroller.getInput();
-  VC_Controller.setAvailBW(input.availBw);
+  if (isNaN(input.availBw) || input.availBw === 0) {
+    UIcontroller.disableForm();
+  } else {
+    VC_Controller.setAvailBW(input.availBw);
+    UIcontroller.enableForm();
+  }
+
   // console.log('SETTINGSSSS BANDWIDTH');
 });
 
-//============================    APP MODULE   ===========================
+//=========== APP MODULE
 
 const APP_Controler = (function(UIctrl, VCctrl) {
+  let DOM = UIctrl.getDOMstring();
   //Setup event listeners
   const setupEventListeners = function() {
-    let DOM = UIctrl.getDOMstring();
     document
       .getElementById(DOM.virtChanelList)
       .addEventListener('click', ctrlDeleteItem);
@@ -274,7 +295,6 @@ const APP_Controler = (function(UIctrl, VCctrl) {
     if (itemID >= 0) {
       let idString;
       // 1. Delete item from the data structure
-
       VCctrl.deleteItem(itemID);
       console.log('deleting item success...');
 
@@ -287,13 +307,17 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       let tablerow = document
         .getElementById('tableData')
         .getElementsByTagName('tr')[idString];
+
       table.removeChild(tablerow);
     }
   };
+
   return {
     init: function() {
       console.log('THE APPLICATION HAS STARTED');
       setupEventListeners();
+      UIctrl.disableForm();
+      // UIctrl.enableForm();
     }
   };
 })(UIcontroller, VC_Controller);
