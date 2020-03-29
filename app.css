@@ -52,8 +52,6 @@ body {
 .btn__setbandwidth:focus {
   outline: none !important;
   border: none !important;
-  /* border: 1px solid white;
-  color: white; */
 }
 .right-wrapper {
   background-color: white;
