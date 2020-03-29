@@ -30,7 +30,7 @@ const UIcontroller = (function() {
       };
     },
     addListItem: function(vc) {
-      let html = `<div style="  padding:5px 10px;" id="${vc.id}" class=" vc list-group-item">
+      let html = `<div style="  padding: 5px 0px 5px 5px;" id="${vc.id}" class="vc list-group-item">
       <div class="vc_desc">
         <div style="color:#000;  flex-basis: 1;"> Name : ${vc.name} </div>
         <div style="color:#000;  flex-basis: 1;"> Min : ${vc.min} </div>
@@ -38,7 +38,7 @@ const UIcontroller = (function() {
         <div style="color:#000;  flex-basis: 1;"> Exp : ${vc.exp} </div>
         <div style="color:#000;  flex-basis: 1;"> Priority : ${vc.pri} </div>
         <div>
-        <button style="flex-wrap; float-right; margin-right:-40px;" id="btn-delete" class="delete btn btn-sm  btn-outline-danger">X
+        <button style=" flex-basis: 1;" id="btn-delete" class="delete btn btn-sm  btn-outline-danger">X
         </button>
         </div>
       </div>
@@ -84,6 +84,7 @@ const UIcontroller = (function() {
       s[0].disabled = false;
       for (var i = 0; i < f.length; i++) f[i].disabled = false;
     }
+    //create display result method here...
   };
 })();
 
