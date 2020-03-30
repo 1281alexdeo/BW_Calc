@@ -70,6 +70,11 @@ const UIcontroller = (function() {
         exp: (document.getElementById('exp').value = '')
       };
     },
+    disable_Calc_Button: function() {
+      let btn = document.getElementById('btn-calc');
+      btn.disabled = true;
+      console.log('Button to disable:', btn);
+    },
 
     disableForm: function() {
       let f = document.forms['VC_form'].getElementsByTagName('input');
@@ -83,8 +88,25 @@ const UIcontroller = (function() {
       let s = document.forms['VC_form'].getElementsByTagName('select');
       s[0].disabled = false;
       for (var i = 0; i < f.length; i++) f[i].disabled = false;
-    }
+    },
     //create display result method here...
+    displayResult: function(result) {
+      let table_data_header = document.getElementById('tableData');
+      let html = '';
+      result.map(res_item => {
+        html = ` <tr>
+          <th scope="row">${res_item.id}</th>
+          <td>${res_item.name}</td>
+          <td>${res_item.min} Mbps</td>
+          <td>${res_item.max} Mbps</td>
+          <td>${res_item.exp} Mbps</td>
+          <td>${res_item.pri}</td>
+          <td style="color:green">${res_item.bandwidth} Mbps</td>
+          </tr>`;
+
+        table_data_header.insertAdjacentHTML('beforeend', html);
+      });
+    }
   };
 })();
 
@@ -228,35 +250,11 @@ btn_add.addEventListener('click', () => {
 
 //Calculate Bandwidth
 const updateResult = function() {
-  let html;
-
   let avbw = VC_Controller.getAvailableBW();
   VC_Controller.calculateBW(avbw);
   let res = VC_Controller.getResult();
-  let table_data_header = document.getElementById('tableData');
-  //populate table with reuslts array
-
-  localStorage.setItem('res', JSON.stringify(res));
-
-  let LSres = JSON.parse(localStorage.getItem('res'));
-  console.log(typeof LSres.id, typeof res.id);
-  LSres.map(item => {
-    // if (LSres.indexOf(item) === -1) {
-    let html = ` <tr>
-        <th scope="row">${item.id}</th>
-        <td>${item.name}</td>
-        <td>${item.min} Mbps</td>
-        <td>${item.max} Mbps</td>
-        <td>${item.exp} Mbps</td>
-        <td>${item.pri}</td>
-        <td style="color:green">${item.bandwidth} Mbps</td>
-        </tr>`;
-
-    table_data_header.insertAdjacentHTML('beforeend', html);
-    // }
-
-    // localStorage.clear();
-  });
+  UIcontroller.displayResult(res);
+  UIcontroller.disable_Calc_Button();
 };
 //Caclulate button
 const UiBtn = UIcontroller.getEventListners();
@@ -318,6 +316,7 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       console.log('THE APPLICATION HAS STARTED');
       setupEventListeners();
       UIctrl.disableForm();
+
       // UIctrl.enableForm();
     }
   };
