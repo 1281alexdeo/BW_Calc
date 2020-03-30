@@ -313,6 +313,9 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       VCctrl.deleteItem(itemID);
       if (VCctrl.data.vc.length === 0) {
         UIctrl.toggle_Calc_Button(false);
+        UIctrl.toggle_continue_button(DOM.cont_btn, true);
+        VCctrl.setAvailBW(0);
+        document.getElementById('avail_bw').value = '';
       }
       console.log('deleting item success...');
 
