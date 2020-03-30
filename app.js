@@ -6,7 +6,8 @@ let vc_list = document.getElementById('vc_list');
 const UIcontroller = (function() {
   let DOMstrings = {
     virtChanelList: 'vc_list',
-    virtChanelForm: 'VC_form'
+    virtChanelForm: 'VC_form',
+    cont_btn: 'btn_continue'
   };
   return {
     getDOMstring: function() {
@@ -70,9 +71,9 @@ const UIcontroller = (function() {
         exp: (document.getElementById('exp').value = '')
       };
     },
-    disable_Calc_Button: function() {
+    toggle_Calc_Button: function(status) {
       let btn = document.getElementById('btn-calc');
-      btn.disabled = true;
+      btn.disabled = status;
       console.log('Button to disable:', btn);
     },
 
@@ -88,6 +89,9 @@ const UIcontroller = (function() {
       let s = document.forms['VC_form'].getElementsByTagName('select');
       s[0].disabled = false;
       for (var i = 0; i < f.length; i++) f[i].disabled = false;
+    },
+    toggle_continue_button: function(id, status) {
+      document.getElementById(id).hidden = status;
     },
     //create display result method here...
     displayResult: function(result) {
@@ -156,7 +160,8 @@ const VC_Controller = (function() {
       max = max || 0;
       min = min || 0;
       exp = exp || 0;
-      pri = pri || 0;
+      pri = pri || 1;
+
       //create new item
       let newItem = new VirtChanel(ID, name, pri, min, max, exp);
       //push new item into data structure
@@ -243,7 +248,7 @@ btn_add.addEventListener('click', () => {
 
     UIcontroller.addListItem(newItem);
   } else {
-    alert('Please Enter VC Name');
+    alert('Please Enter The Available Bandwidth');
   }
   UIcontroller.clearInput();
 });
@@ -254,12 +259,19 @@ const updateResult = function() {
   VC_Controller.calculateBW(avbw);
   let res = VC_Controller.getResult();
   UIcontroller.displayResult(res);
-  UIcontroller.disable_Calc_Button();
+  UIcontroller.toggle_Calc_Button(true);
+  let DOM = UIcontroller.getDOMstring();
+  UIcontroller.toggle_continue_button(DOM.cont_btn, false);
 };
 //Caclulate button
 const UiBtn = UIcontroller.getEventListners();
+let data = VC_Controller.data.vc;
 UiBtn.calcBtn.addEventListener('click', function() {
-  updateResult();
+  if (data.length === 0) {
+    return alert('Nothing to calculate. Please add a virtual channel');
+  } else {
+    updateResult();
+  }
   console.log('WORKING!!');
 });
 //set bandwidth button
@@ -285,6 +297,10 @@ const APP_Controler = (function(UIctrl, VCctrl) {
     document
       .getElementById(DOM.virtChanelList)
       .addEventListener('click', ctrlDeleteItem);
+    document.getElementById(DOM.cont_btn).addEventListener('click', reloadPage);
+  };
+  const reloadPage = function() {
+    window.location.reload(true);
   };
   const ctrlDeleteItem = function(e) {
     let itemID;
@@ -295,6 +311,9 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       let idString;
       // 1. Delete item from the data structure
       VCctrl.deleteItem(itemID);
+      if (VCctrl.data.vc.length === 0) {
+        UIctrl.toggle_Calc_Button(false);
+      }
       console.log('deleting item success...');
 
       // 2. Delete item from the UI
@@ -316,6 +335,7 @@ const APP_Controler = (function(UIctrl, VCctrl) {
       console.log('THE APPLICATION HAS STARTED');
       setupEventListeners();
       UIctrl.disableForm();
+      UIctrl.toggle_continue_button(DOM.cont_btn, true);
 
       // UIctrl.enableForm();
     }
